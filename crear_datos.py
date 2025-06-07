@@ -1,18 +1,22 @@
 import pandas as pd
+from faker import Faker
+import random
 
-# Lista de datos simulados
-data = [
-    {"documento": 123456, "nombre": "Ana Torres", "grupo": "6A", "profesor": "Profe Juan"},
-    {"documento": 234567, "nombre": "José Martínez", "grupo": "6A", "profesor": "Profe Juan"},
-    {"documento": 345678, "nombre": "Luis García", "grupo": "6B", "profesor": "Profe Laura"},
-    {"documento": 456789, "nombre": "María López", "grupo": "6C", "profesor": "Profe Juan"},
-    {"documento": 567890, "nombre": "Carlos Ruiz", "grupo": "6B", "profesor": "Profe Laura"},
-]
+fake = Faker('es_MX')
+Faker.seed(123)
 
-# Convertir a DataFrame
+grupos = ['6A', '6B', '6C', '7A', '7B', '7C']
+profesores = ['Profe Juan', 'Profe Laura', 'Profe Carlos', 'Profe Ana']
+
+data = []
+for i in range(5000):
+    data.append({
+        "documento": fake.unique.random_int(min=100000, max=999999),
+        "nombre": fake.name(),
+        "grupo": random.choice(grupos),
+        "profesor": random.choice(profesores)
+    })
+
 df = pd.DataFrame(data)
-
-# Guardar como CSV
 df.to_csv("estudiantes.csv", index=False)
-
-print("✅ Archivo 'estudiantes.csv' creado correctamente.")
+print("✅ Archivo 'estudiantes.csv' con 5000 registros creado correctamente.")

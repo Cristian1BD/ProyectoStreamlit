@@ -4,7 +4,7 @@ import pandas as pd
 
 app = FastAPI()
 
-# CORS para permitir acceso desde Streamlit
+# Permitir peticiones desde cualquier origen (útil para Streamlit local)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,10 +14,13 @@ app.add_middleware(
 
 @app.get("/api/resumen")
 def resumen_estudiantes():
-    df = pd.read_csv("estudiantes.csv")
-    resumen = {
-        "total_estudiantes": len(df),
-        "grupos": df['grupo'].value_counts().to_dict(),
-        "profesores": df['profesor'].value_counts().to_dict()
-    }
-    return resumen
+    try:
+        df = pd.read_csv("estudiantes.csv")
+        resumen = {
+            "total_estudiantes": len(df),
+            "grupos": df['grupo'].value_counts().to_dict(),
+            "profesores": df['profesor'].value_counts().to_dict()
+        }
+        return resumen
+    except Exception as e:
+        return {"error": str(e)}
