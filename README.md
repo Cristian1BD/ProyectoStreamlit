@@ -1,63 +1,121 @@
-# Proyecto Streamlit: Filtro de Estudiantes con Análisis, API e IA Generativa
+# 🎒 Proyecto Streamlit: Filtro de Estudiantes con Análisis, API e IA Generativa
 
-## Descripción
+## 📌 Descripción
 
-Este proyecto es una aplicación web desarrollada con Streamlit que permite filtrar y analizar datos de estudiantes para salidas pedagógicas. Incluye:
+Aplicación web desarrollada con **Streamlit** que permite:
 
-- Carga y análisis interactivo de un dataset de estudiantes.
-- Visualizaciones dinámicas con Plotly.
-- Consumo de una API simulada para registrar y mostrar estudiantes.
-- Integración con una API de IA generativa (OpenAI) para consultas inteligentes basadas en los datos.
+- Filtrar estudiantes por documento, grupo o profesor.
+- Analizar datos con visualizaciones interactivas usando **Plotly**.
+- Exportar resultados filtrados a Excel.
+- Consultar datos desde una API local (**FastAPI** + **Uvicorn**).
+- Realizar análisis automáticos con **IA generativa de OpenAI**.
 
-## Estructura del Proyecto
+✅ También está desplegado en Streamlit Community Cloud para acceso público sin necesidad de instalación local.
 
-- `app.py`: Archivo principal con la interfaz Streamlit, filtros, gráficos y conexión con API e IA.
-- `generar_datos.py`: Script para generar un CSV con datos simulados de estudiantes.
-- `.env`: Archivo para almacenar la clave de la API OpenAI (no incluido en el repositorio).
-- `requirements.txt`: Dependencias del proyecto.
-- `.gitignore`: Archivos y carpetas ignoradas por Git.
+---
 
-## Cómo Ejecutar
+## 🗂️ Estructura del Proyecto
 
-1. Clona el repositorio:
-   ```bash
-   git clone <url-del-repo>
-   cd <nombre-del-proyecto>
-2. Crea y activa un entorno virtual:
-python -m venv venv
-source venv/bin/activate  # Linux / Mac
-venv\Scripts\activate     # Windows
-3. Instala las dependencias:
+```
+PROYECTOSTREAMLIT/
+│
+├── .env                       # Clave OpenAI (no versionado)
+├── .gitignore                 # Archivos ignorados (como .venv, __pycache__)
+├── README.md                  # Este archivo
+├── requirements.txt           # Dependencias con versiones específicas
+│
+├── app.py                     # App principal Streamlit
+├── generar_datos.py           # Script para generar el CSV de estudiantes
+├── crear_datos.py             # Script auxiliar
+├── api_estudiantes.py         # API local (FastAPI)
+│
+├── estudiantes.csv            # Dataset principal
+├── salidas.csv                # Dataset adicional
+│
+├── pages/
+│   └── 1_📋_Registro.py       # Página con formulario en Streamlit
+│
+└── .venv/                     # Entorno virtual (no se incluye en Git)
+```
+
+---
+
+## ⚙️ Instalación y Ejecución
+
+### 1. Clona el repositorio
+```bash
+git clone <URL-del-repo>
+cd PROYECTOSTREAMLIT
+```
+
+### 2. Crea y activa el entorno virtual
+```bash
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# Linux / Mac
+source .venv/bin/activate
+```
+
+### 3. Instala las dependencias
+```bash
 pip install -r requirements.txt
-4. OPENAI_API_KEY=tu_clave_aqui
-5.streamlit run app.py
-Funcionalidades
-Visualización y filtrado de estudiantes por documento, grupo y profesor.
+```
 
-Gráficos interactivos de distribución por grupo.
+### 4. Configura tu clave OpenAI
+Crea un archivo `.env` en la raíz del proyecto con el siguiente contenido:
+```env
+OPENAI_API_KEY=tu_clave_de_openai
+```
 
-Exportación de resultados filtrados a Excel.
+### 5. Ejecuta la API local (en una terminal separada)
+```bash
+uvicorn api_estudiantes:app --reload
+```
 
-Registro y consulta de estudiantes mediante API simulada.
+### 6. Ejecuta la aplicación Streamlit
+```bash
+streamlit run app.py
+```
 
-Consulta generativa con IA para análisis y generación de texto basado en datos.
+---
 
-Tecnologías y Librerías
-Python 3.x
+## 🎯 Funcionalidades
 
-Streamlit
+- ✅ **Filtros dinámicos** por documento, grupo y profesor.
+- ✅ **Visualización interactiva** con Plotly.
+- ✅ **Exportación a Excel** (XlsxWriter).
+- ✅ **Consulta IA (OpenAI)** para análisis o resúmenes automáticos.
+- ✅ **Consumo de API local** (FastAPI) para estadísticas resumidas.
+- ✅ **Manejo de errores** para APIs.
 
-Pandas
+---
 
-Plotly
+## 🧪 Requisitos Técnicos
 
-OpenAI API
+### Versión de Python recomendada:
+```text
+Python 3.10 o superior
+```
 
-python-dotenv
+### Librerías principales usadas:
+- `streamlit==1.45.1`
+- `pandas==2.3.0`
+- `plotly==6.1.2`
+- `openai==1.84.0`
+- `fastapi==0.115.12`
+- `uvicorn==0.34.3`
+- `python-dotenv==1.1.0`
+- `XlsxWriter==3.2.3`
 
-Notas
-La clave API de OpenAI debe estar configurada en .env para habilitar la función de IA generativa.
+Ver lista completa en [`requirements.txt`](./requirements.txt)
 
-El proyecto incluye manejo básico de errores para consultas a la API de OpenAI.
+---
 
-Puedes ampliar el proyecto agregando APIs reales o modelos de IA adicionales.
+## 📝 Notas Finales
+
+- No olvides activar el entorno virtual antes de ejecutar la app.
+- Si no configuras correctamente la clave `.env`, la función de IA no funcionará.
+- Puedes extender el proyecto con base de datos, autenticación de usuarios, roles, etc.
